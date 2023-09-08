@@ -1,2 +1,2 @@
 # ignore all csv file since github doesn't allow storing large files.
-src/python_data_generation/**/*.csv
+src/python_data_generation/*.csv
