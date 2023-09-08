@@ -14,6 +14,12 @@ access = Access()
 mytime = MyTime()
 
 
+## Define constants/ number of rows (please scale down for testing and scale up for the actual requirements)
+facein_num_rows = 200001
+associate_num_rows = 20000001
+access_num_rows = 10000001
+
+
 # Generate FaceInPage dataset
 # -------------------------------------------------------------------------------------------------
 facein_ids = []
@@ -23,7 +29,7 @@ start_time = time.time()
 with open('FaceInPage.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     # writer.writerow(["ID", "Name", "Nationality", "CountryCod", "Hobby"])  # add if want the column names to appear in the final csv file.
-    for i in range(1, 200001):
+    for i in range(1, facein_num_rows):
         facein_ids.append(i)
         writer.writerow([i, fake.name(), fake.country(), random.randint(1, 50), hobby.get_rand()])
 
@@ -39,7 +45,7 @@ with open('Associates.csv', 'w', newline='') as f:
     friend_relations = set() # to keep track of equivalent symmetrical relationships
 
     # writer.writerow(["FriendRel", "PersonA_ID", "PersonB_ID", "DateofFriendship", "Desc"])  # add if want the column names to appear in the final csv file.
-    for i in range(1, 20000001):
+    for i in range(1, associate_num_rows):
         person_a_id = np.random.choice(facein_ids)
         available_ids = facein_ids[facein_ids != person_a_id]
         person_b_id = np.random.choice(available_ids)
@@ -58,7 +64,7 @@ with open('AccessLogs.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     # writer.writerow(["AccessId", "ByWho", "WhatPage", "TypeOfAccess", "AccessTime"])  # add if want the column names to appear in the final csv file.
     
-    for i in range(1, 10000001):
+    for i in range(1, access_num_rows):
         bywho = np.random.choice(facein_ids)
         writer.writerow([i, bywho, random.randint(1, 200000), access.get_rand(), mytime.get_rand()])
 
