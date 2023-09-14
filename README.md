@@ -8,3 +8,8 @@ DS503 Project 1: Map-Reduce
       Used ChatGPT to generate lists of labels in my_faker.py:
         Prompts and conversation to be included here:
         Visual inspection of the generated labels confirmed accuracy
+
+## Contribution: Daniel Fox
+
+    Came up with preliminary implementation design/plans for each task.
+    Final plans will be decided together as a team.
