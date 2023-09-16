@@ -1,3 +1,4 @@
+
 import random
 import time
 
@@ -27,13 +28,13 @@ class Access:
     def get_rand(self):
         return random.choice(self.access_types)
 
-class MyTime:
-    def __init__(self):
-        self.current_time = int(time.time()) # current epoch time in seconds
+# class MyTime:
+#     def __init__(self):
+#         self.current_time = int(time.time()) # current epoch time in seconds
 
-    def get_rand(self):
-        num_secs_in_year = 31536000
-        return random.randint(self.current_time - num_secs_in_year, self.current_time - num_secs_in_year)
+#     def get_rand(self):
+#         num_secs_in_year = 31536000
+#         return random.randint(self.current_time - num_secs_in_year, self.current_time - num_secs_in_year)
 
 # # Test random generation
 
