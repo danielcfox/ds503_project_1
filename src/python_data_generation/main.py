@@ -2,7 +2,7 @@ from faker import Faker
 import csv
 import random
 import string
-from my_faker import Hobby, Friendship, Access, MyTime
+from my_faker import Hobby, Friendship, Access
 import numpy as np
 import time
 
@@ -11,13 +11,12 @@ fake = Faker()
 hobby = Hobby()
 friendship = Friendship()
 access = Access()
-mytime = MyTime()
 
 
 ## Define constants/ number of rows (please scale down for testing and scale up for the actual requirements)
-facein_num_rows = 200001
-associate_num_rows = 20000001
-access_num_rows = 10000001
+facein_num_rows = 200001 // 1000
+associate_num_rows = 20000001 // 1000
+access_num_rows = 10000001 // 1000
 
 
 # Generate FaceInPage dataset
@@ -52,12 +51,13 @@ with open('Associates.csv', 'w', newline='') as f:
         if (person_a_id, person_b_id) not in friend_relations and (person_b_id, person_a_id) not in friend_relations:
             friend_relations.add((person_a_id, person_b_id))
             friend_relations.add((person_b_id, person_a_id)) # adding this due to the symmetrical relationship between a and b
-            writer.writerow([i, person_a_id, person_b_id, mytime.get_rand(), friendship.get_rand()]) 
+            writer.writerow([i, person_a_id, person_b_id, random.randint(1, 1000000), friendship.get_rand()]) 
 
 print(f"Datasets Associates.csv generated successfully after {time.time() - start_time} seconds!")
 
 # Generate AccessLogs dataset
 # -------------------------------------------------------------------------------------------------
+
 start_time = time.time()
 
 with open('AccessLogs.csv', 'w', newline='') as f:
@@ -66,7 +66,11 @@ with open('AccessLogs.csv', 'w', newline='') as f:
     
     for i in range(1, access_num_rows):
         bywho = np.random.choice(facein_ids)
-        writer.writerow([i, bywho, random.randint(1, 200000), access.get_rand(), mytime.get_rand()])
+
+        # since we don't have a self-visiting case, the WhatPage entries are randomly pulled from a pool without the bywho ID
+        available_ids = facein_ids[facein_ids != bywho]
+        whatpage = np.random.choice(available_ids)
+
+        writer.writerow([i, bywho, whatpage, access.get_rand(), random.randint(1, 1000000)])
 
 print(f"Datasets AccessLogs.csv generated successfully after {time.time() - start_time} seconds!")
-
